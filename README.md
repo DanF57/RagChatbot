@@ -6,36 +6,18 @@
 - Jean Panamito
 - Mateo Martínez
 
-## How to use
+## Cómo utilizar
 
-Run [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+Clonar el repositorio con `git clone`
 
-```bash
-npx create-next-app --example https://github.com/vercel-labs/ai-sdk-preview-python-streaming ai-sdk-preview-python-streaming-example
-```
+Para ejecutarlo localmente se necesita:
 
-```bash
-yarn create next-app --example https://github.com/vercel-labs/ai-sdk-preview-python-streaming ai-sdk-preview-python-streaming-example
-```
-
-```bash
-pnpm create next-app --example https://github.com/vercel-labs/ai-sdk-preview-python-streaming ai-sdk-preview-python-streaming-example
-```
-
-To run the example locally you need to:
-
-1. Sign up for accounts with the AI providers you want to use (e.g., OpenAI, Anthropic).
-2. Obtain API keys for each provider.
-3. Set the required environment variables as shown in the `.env.example` file, but in a new file called `.env`.
-4. `pnpm install` to install the required Node dependencies.
-5. `virtualenv venv` to create a virtual environment.
-6. `source venv/bin/activate` to activate the virtual environment.
-7. `pip install -r requirements.txt` to install the required Python dependencies.
-8. `pnpm dev` to launch the development server.
-
-## Learn More
-
-To learn more about the AI SDK or Next.js by Vercel, take a look at the following resources:
-
-- [AI SDK Documentation](https://sdk.vercel.ai/docs)
-- [Next.js Documentation](https://nextjs.org/docs)
+1. Crear el archivo de variables de entorno `.env.local` y colocar el API Key en la variable: `GEMINI_API_KEY=****`
+2. Tener node.js y python instalados
+3. Tener instalado el manejador de paquetes `pnpm`, si no se lo tiene usa el comando `npm install -g pnpm` 
+4. `pnpm install` Para instalar las dependencias de Node.
+5. `python -m venv venv` para crear el entorno virtual.
+7. `venv\Scripts\activate` para activar el entorno virtual.
+8. `pip install -r requirements.txt` para instalar las librerías necesarias de python.
+9. `pnpm dev` para ejecutar el servidor de desarrollo.
+10. Por defecto se ejecutará en [LocalHost:300](http://localhost:3000/)
