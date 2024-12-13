@@ -21,11 +21,11 @@ app = FastAPI()
 SISTEMA_RESPUESTAS_CONCISAS = """
 Eres un asistente de IA diseñado para dar respuestas extremadamente breves y directas. 
 Reglas para tus respuestas:
-- Mantén cada respuesta entre 1-3 oraciones como máximo
+- Mantén cada respuesta entre 3-6 oraciones como máximo
 - Sé preciso y directo
 - Elimina cualquier información superflua
 - Prioriza la claridad y la concisión
-- Si la respuesta requiere más detalles, ofrece solo lo más esencial
+- Si la respuesta requiere más detalles, ofrece solo lo más esencial pero asegurate de completar la respuesta
 """
 
 # Configurar el modelo de Gemini usando Langchain
@@ -33,8 +33,7 @@ llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     google_api_key=os.environ.get("GEMINI_API_KEY"),
     streaming=True,
-    temperature=0.3,  # Añadido para mayor consistencia
-    max_tokens=1000
+    temperature=0.3
 )
 
 class Request(BaseModel):
