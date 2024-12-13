@@ -21,14 +21,14 @@ import { Textarea } from "./ui/textarea";
 
 const suggestedActions = [
   {
-    title: "What is the weather",
-    label: "in San Francisco?",
-    action: "What is the weather in San Francisco?",
+    title: "Qué es la diabetes",
+    label: "Mellitus tipo 2?",
+    action: "Qué es la diabetes mellitus tipo 2?",
   },
   {
-    title: "How is python useful",
-    label: "for AI engineers?",
-    action: "How is python useful for AI engineers?",
+    title: "Dime 3 factores de riesgo",
+    label: "para contraer diabetes",
+    action: "Dime 3 factores de riesgo para contraer diabetes",
   },
 ];
 
