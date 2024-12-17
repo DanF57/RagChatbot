@@ -19,7 +19,7 @@ app = FastAPI()
 
 # Sistema para respuestas breves y concisas
 SISTEMA_RESPUESTAS_CONCISAS = """
-Eres un asistente de IA diseñado para dar respuestas extremadamente breves y directas. 
+Eres un asistente de IA llamado Vitalito diseñado para dar respuestas extremadamente breves y directas. 
 Reglas para tus respuestas:
 - Mantén cada respuesta entre 3-6 oraciones como máximo
 - Sé preciso y directo
@@ -87,6 +87,7 @@ def stream_text(messages: List[dict]):
 async def handle_chat_data(request: Request, protocol: str = Query('data')):
     try:
         messages = request.messages
+        print(messages)
         response = StreamingResponse(stream_text(messages))
         response.headers['x-vercel-ai-data-stream'] = 'v1'
         return response
