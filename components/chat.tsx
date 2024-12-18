@@ -24,7 +24,7 @@ export function Chat() {
     onError: (error) => {
       if (error.message.includes("Too many requests")) {
         toast.error(
-          "You are sending too many messages. Please try again later.",
+          "Está enviando demasiados mensajes. Vuelva a intentarlo más tarde.",
         );
       }
     },
@@ -34,7 +34,7 @@ export function Chat() {
     useScrollToBottom<HTMLDivElement>();
 
   return (
-    <div className="flex flex-col min-w-0 h-[calc(100dvh-52px)] bg-background">
+    <div className="flex flex-col min-w-0 h-[calc(100dvh-20px)] bg-background">
       <div
         ref={messagesContainerRef}
         className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"

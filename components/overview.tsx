@@ -14,9 +14,7 @@ export const Overview = () => {
       <div className="rounded-xl p-6 flex flex-col gap-8 leading-relaxed text-center max-w-xl">
         <p className="flex flex-row justify-center gap-4 items-center">
           <LogoBot size={64} />
-        </p>
-        <p>
-          Vitalito
+          <span className="text-2xl font-bold">Vitalito</span>
         </p>
       </div>
     </motion.div>
