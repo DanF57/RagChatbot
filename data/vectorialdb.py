@@ -21,7 +21,7 @@ existing_indexes = [index_info["name"] for index_info in pc.list_indexes()]
 index = pc.Index(index_name)
 
 # VECTOR STORE
-namespace = "recetas-medicas"
+namespace = "recetas=medicas"
 vector_store = PineconeVectorStore(index=index, embedding=embeddings, namespace=namespace)
 
 def populate_pinecone_from_csv(csv_file):
@@ -58,7 +58,7 @@ def populate_pinecone_from_csv(csv_file):
             recomendaciones = recomendaciones or "Sin recomendaciones"
 
             # Concatenar textos relevantes para generar embeddings
-            text_to_embed = f"{diagnostico} {descripcion} {indicaciones} {recomendaciones} {alergias}"
+            text_to_embed = f"{diagnostico} {descripcion}"
             
             # Generar embeddings usando embed_query
             try:
@@ -69,6 +69,7 @@ def populate_pinecone_from_csv(csv_file):
 
             # Metadata adicional con todos los campos
             metadata = {
+                "text": text_to_embed,
                 "dni": dni,
                 "fecha": fecha,
                 "proxima_cita": proxima_cita,
@@ -93,9 +94,6 @@ def populate_pinecone_from_csv(csv_file):
 
 # Poblar Pinecone desde un archivo CSV
 if __name__ == "__main__":
-    # Nombre del namespace que deseas limpiar
-    namespace = "default"
-
     # Poblar el índice desde el CSV
     populate_pinecone_from_csv("output.csv")
 
