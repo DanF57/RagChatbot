@@ -20,13 +20,14 @@ export function Chat() {
     isLoading,
     stop,
   } = useChat({
+    api: "/api/chat",
     maxSteps: 4,
+    onResponse: (res) => {
+      console.log("Respuesta recibida del backend:", res);
+    },
     onError: (error) => {
-      if (error.message.includes("Too many requests")) {
-        toast.error(
-          "Está enviando demasiados mensajes. Vuelva a intentarlo más tarde.",
-        );
-      }
+      console.error("Error al procesar la respuesta:", error);
+      toast.error("Ocurrió un error al recibir la respuesta del servidor.");
     },
   });
 
