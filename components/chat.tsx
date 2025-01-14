@@ -27,8 +27,7 @@ export function Chat() {
     },
     onError: (error) => {
       console.error("Error al procesar la respuesta:", error);
-      toast.error("Ocurrió un error al recibir la respuesta del servidor.");
-    },
+    }
   });
 
   const [messagesContainerRef, messagesEndRef] =
