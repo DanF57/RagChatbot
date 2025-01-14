@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { LogoBot } from "@/app/icons";
 import Image from "next/image";
-import vitalitoImg from ".\\assets\\vitalito.png";
+import vitalitoImg from '@/assets/vitalito.png';
 
 export const Overview = () => {
   return (
