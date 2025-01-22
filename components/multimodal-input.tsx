@@ -87,14 +87,11 @@ export function MultimodalInput({
   useEffect(() => {
     if (textareaRef.current) {
       const domValue = textareaRef.current.value;
-      // Prefer DOM value over localStorage to handle hydration
       const finalValue = domValue || localStorageInput || "";
       setInput(finalValue);
       adjustHeight();
     }
-    // Only run once after hydration
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // Solo ejecuta en el montaje
 
   useEffect(() => {
     setLocalStorageInput(input);
@@ -113,6 +110,20 @@ export function MultimodalInput({
       textareaRef.current?.focus();
     }
   }, [handleSubmit, setLocalStorageInput, width]);
+
+  const speaktext = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && lastMessage.role === "assistant") {
+      const utterance = new SpeechSynthesisUtterance(lastMessage.content);
+      utterance.lang = "es-ES";
+      utterance.rate = 1;
+      utterance.volume = 1;
+      speechSynthesis.speak(utterance);
+    } else {
+      toast.error("No hay un mensaje de respuesta para leer.");
+    }
+  };
 
   return (
     <div className="relative w-full flex flex-col gap-4">
@@ -154,7 +165,7 @@ export function MultimodalInput({
         onChange={handleInput}
         className={cn(
           "min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-xl !text-base bg-muted",
-          className,
+          className
         )}
         rows={3}
         autoFocus
@@ -163,14 +174,15 @@ export function MultimodalInput({
             event.preventDefault();
 
             if (isLoading) {
-              toast.error("Por favor, espere a que el modelo termine su respuesta");
+              toast.error(
+                "Por favor, espere a que el modelo termine su respuesta"
+              );
             } else {
               submitForm();
             }
           }
         }}
       />
-
       {isLoading ? (
         <Button
           className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
@@ -183,16 +195,28 @@ export function MultimodalInput({
           <StopIcon size={14} />
         </Button>
       ) : (
-        <Button
-          className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
-          onClick={(event) => {
-            event.preventDefault();
-            submitForm();
-          }}
-          disabled={input.length === 0}
-        >
-          <ArrowUpIcon size={14} />
-        </Button>
+        <div className="flex gap-2 absolute bottom-2 right-2">
+          <Button
+            className="rounded-full p-1.5 h-fit m-0.5 border dark:border-zinc-600"
+            onClick={(event) => {
+              event.preventDefault();
+              submitForm();
+            }}
+            disabled={input.length === 0}
+          >
+            <ArrowUpIcon size={14} />
+          </Button>
+          <Button
+            id="read"
+            onClick={(event) => {
+              event.preventDefault();
+              speaktext(event);
+            }}
+            className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
+          >
+            Leer
+          </Button>
+        </div>
       )}
     </div>
   );
