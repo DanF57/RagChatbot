@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: FastAPI",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "api.index:app",  // Cambiar 'index:app' por 'api.index:app' si el archivo index.py está en la carpeta api
+                "--reload"
+            ],
+            "jinja": true
+        }
+    ]
+}

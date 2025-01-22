@@ -1,4 +1,6 @@
+from io import BytesIO
 import os
+from PIL import Image
 from dotenv import load_dotenv
 from typing import List, Dict
 import json
@@ -10,8 +12,8 @@ from .utils.prompt import prompt_basic
 
 # FastAPI
 from pydantic import BaseModel
-from fastapi import FastAPI, Query
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, File, Query, UploadFile
+from fastapi.responses import JSONResponse, StreamingResponse
 
 # LangChain
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -19,6 +21,8 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
+
+import google.generativeai as genai
 
 # Cargar variables de entorno
 load_dotenv(".env.local")
@@ -122,6 +126,37 @@ async def handle_chat_data(request: Request, protocol: str = Query('data')):
         response = StreamingResponse(stream_rag_response(messages))
         response.headers["x-vercel-ai-data-stream"] = "v1"
         return response
+    except Exception as e:
+        import traceback
+        return {
+            "error": str(e),
+            "traceback": traceback.format_exc()
+        }
+
+UPLOAD_DIR = "uploads"
+from PIL import Image
+
+@app.post("/api/chat/upload-image")
+async def upload_image(image: UploadFile = File(...)):
+    try:
+        # Leer los bytes de la imagen en memoria
+        image_bytes = await image.read()
+        image_stream = BytesIO(image_bytes)
+
+        genai.configure(api_key="AIzaSyBrSiKIktaufCWN6HqMukW94ymiw8Nbm8E")
+
+        # Abrir la imagen usando PIL
+        organ = Image.open(image_stream)
+
+        # Crear el modelo de Gemini
+        model = genai.GenerativeModel("gemini-1.5-flash")
+
+        # Generar contenido basado en la imagen y un texto de ejemplo
+        response = model.generate_content(["Dime infomación importante sobre esta receta, no olvides que debes responder en español", organ])
+
+        # Retornar la respuesta del modelo
+        return {"response": response.text}
+
     except Exception as e:
         import traceback
         return {
