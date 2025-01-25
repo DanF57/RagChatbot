@@ -5,6 +5,7 @@ import { MultimodalInput } from "@/components/multimodal-input";
 import { Overview } from "@/components/overview";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { useChat } from "ai/react";
+import { Footer } from "@/components/footer";
 import { toast } from "sonner";
 
 export function Chat() {
@@ -75,4 +76,5 @@ export function Chat() {
       </form>
     </div>
   );
+  <Footer/>
 }
